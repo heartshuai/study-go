@@ -23,7 +23,7 @@ func main() {
 		}
 
 	}
-	//mylist.InsertBefore("gin", e)
+	//mylist.InsertBefore("gin", e)i
 	mylist.Remove(e)
 	//fmt.Println(mylist)
 	for e := mylist.Back(); e != nil; e = e.Prev() {
