@@ -1,16 +1,14 @@
-package server
+package main
 
 import (
 	"context"
+	"google.golang.org/grpc"
 	"learngo/OldPackageTest/grpc_test/proto/helloworld/proto"
+	"net"
 )
 
 type Server struct {
-}
-
-func (s *Server) mustEmbedUnimplementedGreeterServer() {
-	//TODO implement me
-	panic("implement me")
+	proto.UnimplementedGreeterServer
 }
 
 func (s *Server) SayHello(ctx context.Context, request *proto.HelloRequest) (*proto.HelloReply, error) {
@@ -18,6 +16,12 @@ func (s *Server) SayHello(ctx context.Context, request *proto.HelloRequest) (*pr
 }
 
 func main() {
-	//g := grpc.NewServer()
-	//proto.RegisterGreeterServer(g, &Server{})
+	g := grpc.NewServer()
+	proto.RegisterGreeterServer(g, &Server{})
+	lis, err := net.Listen("tcp", "0.0.0.0:8080")
+	if err != nil {
+		panic(err)
+	}
+	_ = g.Serve(lis)
+	defer g.Stop()
 }
