@@ -4,8 +4,10 @@ import (
 	"context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/metadata"
 	"learngo/OldPackageTest/grpc_test/proto/helloworld/proto"
 	"log"
+	"time"
 )
 
 func main() {
@@ -18,9 +20,11 @@ func main() {
 
 	// 创建客户端
 	c := proto.NewGreeterClient(conn)
-
+	//md := metadata.Pairs("timestamp", time.Now().Format(timestampFormat))
+	md := metadata.New(map[string]string{"timestamp": time.Now().Format(time.RFC3339)})
+	ctx := metadata.NewOutgoingContext(context.Background(), md)
 	// 调用 RPC 方法
-	r, err := c.SayHello(context.Background(), &proto.HelloRequest{Name: "yxs"})
+	r, err := c.SayHello(ctx, &proto.HelloRequest{Name: "yxs"})
 	if err != nil {
 		panic(err)
 	}

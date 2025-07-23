@@ -1,0 +1,7 @@
+syntax = "proto3";
+package base;
+option go_package =".;proto";
+//go语言中生成的是一个文件 也就只有python会生成两个文件
+message Pong{
+  string id = 1;
+}

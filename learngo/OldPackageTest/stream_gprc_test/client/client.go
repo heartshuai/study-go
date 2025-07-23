@@ -50,6 +50,7 @@ func main() {
 			fmt.Println("收到客户端消息:" + data.Data)
 		}
 	}()
+	//1.集中学习protobuf,grpc
 	go func() {
 		defer wg.Done()
 		for {
